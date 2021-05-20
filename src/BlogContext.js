@@ -1,24 +1,24 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getData } from './api/api';
 
 const BlogContext = createContext(null);
 
 const BlogProvider = ({ children }) => {
-  const BASE_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const data = await getData(BASE_URL);
-      setPosts(data);
-    }
-    fetchPosts();
-  }, []);
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [isLike, setIsLike] = useState(false);
+  
+  const saveLikedPost = (id, post) => localStorage.setItem(id, post);
+  // const deleteLikePost = (id) => {
+  //   setLikedPosts(likedPosts.filter(post => id !== post.id));
+  //   localStorage.removeItem(id);
+  // };
+  // const getLikedPosts = (id) => localStorage.getItem(id);
 
 
   const contextValue = {
-    posts,
+    likedPosts,
+    isLike,
+    saveLikedPost
   }
 
   return (
