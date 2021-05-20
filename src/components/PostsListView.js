@@ -1,4 +1,13 @@
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import { useBlog } from "../BlogContext";
+
 const PostsListView = ({ posts }) => {
+  const { isLike, setIsLike, saveLikedPost, deleteLikedPost, color } = useBlog();
 
   return (
     <div className="uk-grid uk-child-width-1-2@s uk-child-width-1-2@m">
@@ -16,11 +25,22 @@ const PostsListView = ({ posts }) => {
               <div className="uk-card-body">
                   <h3 className="uk-card-title uk-margin-remove-bottom uk-flex uk-flex-middle uk-flex-between">
                     {`${post.title.slice(0, 6)}...`} 
-                    <span
+                    <a
+                      href="/"
                       className="uk-icon-link"
                       uk-icon="heart"
-                      style={{'cursor': 'pointer'}}
-                    />
+                      style={{'cursor': 'pointer', color: color}}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        saveLikedPost(post.id, post.title);
+                        setIsLike(true);
+
+                        if(isLike) {
+                          setIsLike(false);
+                          deleteLikedPost(post.id);
+                        }
+                      }}
+                    > </a>
                   </h3>
                 <p>
                   {`${post.body.slice(0, 70)}...`}

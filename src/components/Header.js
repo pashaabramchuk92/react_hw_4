@@ -1,8 +1,7 @@
 import { useBlog } from '../BlogContext';
 
 const Header = () => {
-  const { isLike } = useBlog();
-  console.log(isLike);
+  const { likedPosts, deleteLikedPost } = useBlog();
 
   return (
     <nav className="uk-navbar uk-navbar-container">
@@ -34,18 +33,22 @@ const Header = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Title</td>
-                      <td className="uk-text-right">
-                        <button
-                          className="uk-button uk-icon" type="button" uk-icon="icon: close;">
-                          <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="close">
-                            <path fill="none" stroke="#000" strokeWidth="1.06" d="M16,16 L4,4"></path>
-                            <path fill="none" stroke="#000" strokeWidth="1.06" d="M16,4 L4,16"></path>
-                          </svg>
-                        </button>
-                      </td>
-                    </tr>
+                    {likedPosts.map(post => (
+                      <tr key={post.id}>
+                        <td>{post.title}</td>
+                        <td className="uk-text-right">
+                          <button
+                            className="uk-button uk-icon" type="button" uk-icon="icon: close;"
+                            onClick={() => deleteLikedPost(post.id)}
+                          >
+                            <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="close">
+                              <path fill="none" stroke="#000" strokeWidth="1.06" d="M16,16 L4,4"></path>
+                              <path fill="none" stroke="#000" strokeWidth="1.06" d="M16,4 L4,16"></path>
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

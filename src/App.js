@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import useDebounce from './hooks/useDebounce';
-import { BlogProvider } from './BlogContext';
+import { Router, Switch, Route } from "react-router-dom";
+import { createBrowserHistory } from 'history';
+import { useState, useEffect } from 'react';
 
-import { getData, getTotalCount, getMoreData } from "./api/api";
-import NavBar from "./components/NavBar";
-import PostsGridView from "./components/PostsGridView";
-import PostsListView from "./components/PostsListView";
-import LoadMore from "./components/LoadMore";
-import Header from "./components/Header";
+import { getData, getTotalCount, getMoreData, getPageData } from "./api/api";
+import useDebounce from './hooks/useDebounce';
+import MainPage from "./containers/MainPage";
+import PostPage from "./containers/PostPage";
+
+const history = createBrowserHistory();
 
 const App = () => {
   const BASE_URL = 'https://jsonplaceholder.typicode.com/posts';
@@ -35,7 +35,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const data = await getData(BASE_URL, page, limit, order, query);
+      const data = await getData(BASE_URL, page, limit, order, debouncedValue);
       setPosts(data);
       setIsSearching(false);
     }
@@ -58,36 +58,49 @@ const App = () => {
     setNext(next + Number(limit));
   }
 
+  const args = {
+    posts,
+    page,
+    limit,
+    order,
+    query,
+    total,
+    isSearching,
+    viewGrid,
+    next,
+    isLoading,
+    setPosts,
+    setPage,
+    setLimit,
+    setOrder,
+    setQuery,
+    setTotal,
+    setIsSearching,
+    setViewGrid,
+    setNext,
+    setIsLoding,
+    handleToggleView,
+    handleLoadMore,
+    getPageData,
+  }
+
   return (
-    <BlogProvider>
-      <div className="uk-main">
-        <Header posts={posts} />
-        <div className="uk-section">
-          <div className="uk-container">
-            <NavBar
-              setIsSearching={setIsSearching}
-              isSearching={isSearching}
-              setQuery={setQuery}
-              setOrder={setOrder}
-              setLimit={setLimit}
-              viewGrid={viewGrid}
-              handleToggleView={handleToggleView}
-            />
-            {
-              viewGrid ? 
-              <PostsGridView posts={posts} /> : 
-              <PostsListView posts={posts} />
-            }
-            <LoadMore
-              handleLoadMore={handleLoadMore}
-              isLoading={isLoading}
-              setIsLoding={setIsLoding}
-            />
-          </div>
-        </div>
-      </div>
-    </BlogProvider>
-  );
+    <Router history= {history}>
+      <Switch>
+        <Route
+          path='/'
+          exact
+          render={() => (
+            <MainPage args={args} />
+          )}
+        />
+        <Route
+          path='/post'
+          render={() => <PostPage args={args} />}
+        />
+      </Switch>
+    </Router>
+  )
 }
 
 export default App;
