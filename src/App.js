@@ -18,7 +18,6 @@ const App = () => {
         <Route
           path='/posts/:id'
           component={PostPage}
-          
         />
       </Switch>
     </Router>
