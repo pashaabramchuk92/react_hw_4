@@ -5,11 +5,11 @@ import useDebounce from '../hooks/useDebounce';
 import { BlogProvider } from '../BlogContext';
 
 import NavBar from "../components/NavBar";
-import PostsGridView from "../components/PostsGridView";
-import PostsListView from "../components/PostsListView";
 import LoadMore from "../components/LoadMore";
 import Header from "../components/Header";
 import Pagination from "../components/Pagination";
+import PostsGridPage from '../components/PostsGridPage';
+import PostsListPage from '../components/PostsListPage';
 
 const MainPage = () => {
   const BASE_URL = 'https://jsonplaceholder.typicode.com/posts';
@@ -77,8 +77,8 @@ const MainPage = () => {
             />
             {
               viewGrid 
-              ? <PostsGridView posts={posts} /> 
-              : <PostsListView posts={posts} />
+              ? <PostsGridPage posts={posts} /> 
+              : <PostsListPage posts={posts} />
             }
             <LoadMore
               handleLoadMore={handleLoadMore}

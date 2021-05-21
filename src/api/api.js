@@ -1,12 +1,8 @@
 const getData = async (url, page, limit, order, query) => {
-  try {
-    const res = await fetch(
-      `${url}?_page=${page}&_limit=${limit}&_sort=title&_order=${order}
-      &title_like=${query}`);
-    return await res.json();
-  } catch (error) {
-    console.log(`Error: ${error}`);
-  }
+  const res = await fetch(
+    `${url}?_page=${page}&_limit=${limit}&_sort=title&_order=${order}
+    &title_like=${query}`);
+  return await res.json();
 }
 
 const getTotalCount = async (url, page) => {

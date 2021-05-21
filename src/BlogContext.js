@@ -3,9 +3,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const BlogContext = createContext(null);
 
 const BlogProvider = ({ children }) => {
-  const [isLike, setIsLike] = useState(false);
+
   const [likedPosts, setLikedPosts] = useState([]);
-  const [color, setColor] = useState('');
+  const [contextIsLike, setContextIsLike] = useState(false);
 
   useEffect(() => {
     const createArr = () => {
@@ -17,12 +17,11 @@ const BlogProvider = ({ children }) => {
       }
       return arr;
     }
-    setIsLike(true ? false : true);
-    setColor(isLike ? 'blue' : '');
+    setContextIsLike(true ? false : true);
     setLikedPosts(createArr());
-  }, [isLike]);
+  }, [contextIsLike]);
 
-  const saveLikedPost = (id, title) => {localStorage.setItem(id, title); setIsLike(true)};
+  const saveLikedPost = (id, title) => localStorage.setItem(id, title)
 
   const deleteLikedPost = (id) => {
     setLikedPosts(likedPosts.filter(post => id !== post.id));
@@ -33,9 +32,7 @@ const BlogProvider = ({ children }) => {
 
   const contextValue = {
     likedPosts,
-    isLike,
-    color,
-    setIsLike,
+    setContextIsLike,
     saveLikedPost,
     deleteLikedPost,
     getLikedPost,
