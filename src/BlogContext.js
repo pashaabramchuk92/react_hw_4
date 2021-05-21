@@ -1,24 +1,45 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getData } from './api/api';
 
 const BlogContext = createContext(null);
 
 const BlogProvider = ({ children }) => {
-  const BASE_URL = 'https://jsonplaceholder.typicode.com/posts';
-
-  const [posts, setPosts] = useState([]);
+  const [isLike, setIsLike] = useState(false);
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [color, setColor] = useState('');
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const data = await getData(BASE_URL);
-      setPosts(data);
+    const createArr = () => {
+      const arr = [];
+      const keys = Object.keys(localStorage);
+  
+      for (const key of keys) {
+        arr.push({title: getLikedPost(key), id: key});
+      }
+      return arr;
     }
-    fetchPosts();
-  }, []);
+    setIsLike(true ? false : true);
+    setColor(isLike ? 'blue' : '');
+    setLikedPosts(createArr());
+  }, [isLike]);
 
+  const saveLikedPost = (id, title) => {localStorage.setItem(id, title); setIsLike(true)};
+
+  const deleteLikedPost = (id) => {
+    setLikedPosts(likedPosts.filter(post => id !== post.id));
+    localStorage.removeItem(id);
+  }
+
+  const getLikedPost = (id) => localStorage.getItem(id);
 
   const contextValue = {
-    posts,
+    likedPosts,
+    isLike,
+    color,
+    setIsLike,
+    saveLikedPost,
+    deleteLikedPost,
+    getLikedPost,
+    setLikedPosts
   }
 
   return (

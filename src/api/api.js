@@ -1,11 +1,12 @@
-// const getData = async (url, page, limit, order, query) => {
-//   const res = await fetch(`${url}?_page=${page}&_limit=${limit}&_sort=title&_order=${order}&q=${query}`);
-//   return await res.json();
-// }
-
-const getData = async (url) => {
-  const res = await fetch(url);
-  return await res.json();
+const getData = async (url, page, limit, order, query) => {
+  try {
+    const res = await fetch(
+      `${url}?_page=${page}&_limit=${limit}&_sort=title&_order=${order}
+      &title_like=${query}`);
+    return await res.json();
+  } catch (error) {
+    console.log(`Error: ${error}`);
+  }
 }
 
 const getTotalCount = async (url, page) => {
@@ -19,7 +20,7 @@ const getPageData = async (url, id) => {
 }
 
 const getMoreData = async (url, start, end, order) => {
-  const res = await fetch(`${url}?_start=${start}&_end=${end}&_sort=id&_order=${order}`);
+  const res = await fetch(`${url}?_start=${start}&_end=${end}&_sort=title&_order=${order}`);
   return await res.json();
 }
 
