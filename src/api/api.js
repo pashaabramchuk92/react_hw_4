@@ -24,9 +24,27 @@ const getMoreData = async (url, start, end, order) => {
   return await res.json();
 }
 
+const getPostComments = async (url, id) => {
+  const res = await fetch(`${url}/${id}?_embed=comments`);
+  return await res.json();
+}
+
+const postNewComment = async (url, id, data) => {
+  const res = await fetch(`${url}/${id}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  return await res.json();
+}
+
 export {
   getData,
   getTotalCount,
   getMoreData,
-  getPageData
+  getPageData,
+  getPostComments,
+  postNewComment
 }

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useBlog } from '../BlogContext';
 
 const Header = () => {
@@ -8,7 +9,7 @@ const Header = () => {
       <div className="uk-navbar-left">
         <ul className="uk-navbar-nav">
           <li className="uk-active">
-            <a href="/" onClick={e => e.preventDefault()}>Posts</a>
+            <Link to='/'>Posts</Link>
           </li>
           <li>
             <a href="/" onClick={e => e.preventDefault()}>Albums</a>

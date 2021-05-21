@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useBlog } from "../BlogContext";
 
-const PostsGridView = ({ posts, getPageData, url }) => {
+const PostsGridView = ({ posts }) => {
   const { isLike, setIsLike, saveLikedPost, deleteLikedPost, color } = useBlog();
   
   return (
@@ -31,13 +31,13 @@ const PostsGridView = ({ posts, getPageData, url }) => {
               </h3>
             </div>
             <div className="uk-card-body">
-                <p>{`${post.body.slice(0, 100)}...`}</p>
+              <p>{`${post.body.slice(0, 100)}...`}</p>
             </div>
             <div className="uk-card-footer">
-                <Link
-                  to={`/post`}
-                  className="uk-button uk-button-text"
-                >Read more</Link>
+              <Link
+                to={`/posts/${post.id}`}
+                className="uk-button uk-button-text"
+              >Read more</Link>
             </div>
           </div>
         </div>

@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useBlog } from "../BlogContext";
 
 const PostsListView = ({ posts }) => {
@@ -15,7 +10,7 @@ const PostsListView = ({ posts }) => {
         <div key={post.id}>
           <div
             className="uk-card uk-card-default uk-margin-medium-bottom uk-child-width-1-2@s uk-grid-collapse uk-margin uk-grid"
-            uk-grid
+            uk-grid="true"
           >
             <div className="uk-card-media-left uk-cover-container uk-first-column">
               <img src="https://picsum.photos/600/400" alt="" className="uk-cover" />
@@ -45,7 +40,10 @@ const PostsListView = ({ posts }) => {
                 <p>
                   {`${post.body.slice(0, 70)}...`}
                 </p>
-                <a href="post.html" className="uk-button uk-button-text">Read more</a>
+                <Link
+                  to={`/posts/${post.id}`}
+                  className="uk-button uk-button-text"
+                >Read more</Link>
               </div>
             </div>
           </div>
