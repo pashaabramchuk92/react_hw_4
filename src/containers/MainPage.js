@@ -4,16 +4,14 @@ import { getData, getTotalCount, getMoreData } from "../api/api";
 import useDebounce from '../hooks/useDebounce';
 import { BlogProvider } from '../BlogContext';
 
-import NavBar from "../components/NavBar";
-import LoadMore from "../components/LoadMore";
+import NavBar from "../components/NavBar/NavBar";
+import LoadMore from "../components/Footer/LoadMore";
 import Header from "../components/Header";
-import Pagination from "../components/Pagination";
-import PostsGridPage from '../components/PostsGridPage';
-import PostsListPage from '../components/PostsListPage';
+import Pagination from "../components/Footer/Pagination";
+import PostsGridPage from '../components/MainPage/PostsGridPage';
+import PostsListPage from '../components/MainPage/PostsListPage';
 
 const MainPage = () => {
-  const BASE_URL = 'https://jsonplaceholder.typicode.com/posts';
-
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
@@ -22,6 +20,7 @@ const MainPage = () => {
   const [total, setTotal] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const [viewGrid, setViewGrid] = useState(true);
+  const [viewList, setViewList] = useState(false);
   const [next, setNext] = useState(0);
   const [isLoading, setIsLoding] = useState(false);
 
@@ -29,7 +28,7 @@ const MainPage = () => {
 
   useEffect(() => {
     const fetchTotal = async () => {
-      const totalCount = await getTotalCount(BASE_URL, page);
+      const totalCount = await getTotalCount(page);
       setTotal(totalCount);
     };
     fetchTotal();
@@ -37,7 +36,7 @@ const MainPage = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const data = await getData(BASE_URL, page, limit, order, debouncedValue);
+      const data = await getData(page, limit, order, debouncedValue);
       setPosts(data);
       setIsSearching(false);
     }
@@ -46,15 +45,13 @@ const MainPage = () => {
 
   useEffect(() => {
     const fetchMorePosts = async () => {
-      const morePosts = await getMoreData(BASE_URL, 0, next + limit, order);
+      const morePosts = await getMoreData(0, next + limit, order);
       setPosts(morePosts);
       setIsLoding(false);
     }
     fetchMorePosts();
   }, [next, limit, order]);
-
-  const handleToggleView = () => setViewGrid(!viewGrid);
-
+  
   const handleLoadMore = () => {
     setQuery('');
     setNext(next + Number(limit));
@@ -73,7 +70,9 @@ const MainPage = () => {
               setOrder={setOrder}
               setLimit={setLimit}
               viewGrid={viewGrid}
-              handleToggleView={handleToggleView}
+              viewList={viewList}
+              setViewGrid={setViewGrid}
+              setViewList={setViewList}
             />
             {
               viewGrid 

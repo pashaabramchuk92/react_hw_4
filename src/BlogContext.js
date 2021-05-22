@@ -32,6 +32,7 @@ const BlogProvider = ({ children }) => {
 
   const contextValue = {
     likedPosts,
+    contextIsLike,
     setContextIsLike,
     saveLikedPost,
     deleteLikedPost,

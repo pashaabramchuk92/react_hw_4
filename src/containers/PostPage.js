@@ -4,24 +4,20 @@ import { useState, useEffect } from 'react';
 import { getPageData, getPostComments, postNewComment } from "../api/api";
 import Header from '../components/Header';
 import { BlogProvider } from '../BlogContext';
-import Comments from '../components/Comments';
-import NewComment from '../components/NewComment';
-
-
+import Comments from '../components/PostPage/Comments';
+import NewComment from '../components/PostPage/NewComment';
 
 const PostPage = ({
   match: {
     params: { id }
   }
 }) => {
-  const BASE_URL = 'https://jsonplaceholder.typicode.com/posts';
-
   const [currentPage, setCurrentPage] = useState({});
   const [comments, setComments] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
-      const data = await getPageData(BASE_URL, id);
+      const data = await getPageData(id);
       setCurrentPage(data);
     }
 
@@ -30,7 +26,7 @@ const PostPage = ({
 
   useEffect(() => {
     const fetchComments = async () => {
-      const data = await getPostComments(BASE_URL, id);
+      const data = await getPostComments(id);
       setComments(data.comments);
     }
 
@@ -54,7 +50,6 @@ const PostPage = ({
             <h3 className="uk-margin-remove-top">Comments:</h3>
             <Comments comments={comments} />
             <NewComment
-              url={BASE_URL}
               id={id}
               postNewComment={postNewComment}
             />

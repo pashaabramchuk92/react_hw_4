@@ -1,7 +1,7 @@
 import SearchBar from './SearchBar';
 import SortPosts from './SortPosts';
 import ShowPosts from './ShowPosts';
-import ToggleView from './ToggleView';
+import ChangeView from './ChangeView';
 
 const NavBar = ({
   setIsSearching,
@@ -10,7 +10,9 @@ const NavBar = ({
   setOrder,
   setLimit,
   viewGrid,
-  handleToggleView
+  viewList,
+  setViewGrid,
+  setViewList,
 }) => {
   return (
     <div className="uk-margin-medium-bottom uk-flex">
@@ -21,9 +23,11 @@ const NavBar = ({
       />
       <SortPosts setOrder={setOrder} />
       <ShowPosts setLimit={setLimit} />
-      <ToggleView
+      <ChangeView
         viewGrid={viewGrid}
-        handleToggleView={handleToggleView}
+        viewList={viewList}
+        setViewGrid={setViewGrid}
+        setViewList={setViewList}
       />
     </div>
   )

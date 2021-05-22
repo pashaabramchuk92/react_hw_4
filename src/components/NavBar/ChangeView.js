@@ -1,19 +1,19 @@
-const ToggleView = ({ viewGrid, handleToggleView }) => {
+const ChangeView = ({ viewGrid, viewList, setViewGrid, setViewList, }) => {
 
   const activeClassGrid = viewGrid ? 'uk-active' : '';
-  const activeClassList = viewGrid ? '' : 'uk-active';
+  const activeClassList = viewList ? 'uk-active' : '';
   
   return (
     <div className="uk-button-group uk-margin-left">
       <button
         className={"uk-button uk-button-default" + activeClassGrid}
-        onClick={handleToggleView}
+        onClick={() => {setViewGrid(true); setViewList(false)}}
       >
         <span uk-icon="icon:  grid"></span>
       </button>
       <button
         className={"uk-button uk-button-default" + activeClassList}
-        onClick={handleToggleView}
+        onClick={() => {setViewGrid(false); setViewList(true)}}
       >
         <span uk-icon="icon:  list"></span>
       </button>
@@ -21,4 +21,4 @@ const ToggleView = ({ viewGrid, handleToggleView }) => {
   )
 }
 
-export default ToggleView;
+export default ChangeView;

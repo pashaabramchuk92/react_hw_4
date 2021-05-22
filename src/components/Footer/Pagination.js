@@ -14,10 +14,7 @@ const Pagination = ({ total, limit, page, setPage }) => {
             e.preventDefault();
             setPage(page - 1)
           }}
-        ><span className="uk-icon uk-pagination-previous">
-          <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" data-svg="pagination-previous">
-            <polyline fill="none" stroke="#000" strokeWidth="1.2" points="6 1 1 6 6 11"></polyline>
-          </svg>
+        ><span className="uk-icon uk-pagination-previous" uk-pagination-previous="true">
         </span></a>}
       </li>
       {pageArr.map(x => {
@@ -45,11 +42,8 @@ const Pagination = ({ total, limit, page, setPage }) => {
             e.preventDefault();
             setPage(page + 1)
           }}
-        ><span className="uk-icon uk-pagination-next">
-          <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" data-svg="pagination-next">
-            <polyline fill="none" stroke="#000" strokeWidth="1.2" points="1 1 6 6 1 11"></polyline>
-          </svg>
-        </span></a>}
+        ><span className="uk-icon uk-pagination-next" uk-pagination-next="true">
+          </span></a>}
       </li>
     </ul>
   )

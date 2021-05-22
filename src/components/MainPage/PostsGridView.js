@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useBlog } from "../BlogContext";
+import { useBlog } from "../../BlogContext";
 
 const PostsGridView = ({ post }) => {
   const {
     setContextIsLike,
     saveLikedPost,
     deleteLikedPost,
-    getLikedPost
+    getLikedPost,
+    contextIsLike
   } = useBlog();
 
-  const [isLike, setIsLike] = useState(false);
+  const [isLike, setIsLike] = useState(contextIsLike);
 
   useEffect(() => {
     setIsLike(post.title === getLikedPost(post.id));
-  }, [isLike]);
+  }, [isLike, contextIsLike]);
 
   return (
     <div>
@@ -26,7 +27,7 @@ const PostsGridView = ({ post }) => {
               href="/"
               className="uk-icon-link"
               uk-icon="heart"
-              style={{'cursor': 'pointer', color: isLike ? 'blue' : ''}}
+              style={{'cursor': 'pointer', color: isLike ? 'red' : ''}}
               onClick={(e) => {
                 e.preventDefault();
                 saveLikedPost(post.id, post.title);
@@ -35,6 +36,7 @@ const PostsGridView = ({ post }) => {
 
                 if(isLike) {
                   setIsLike(false);
+                  setContextIsLike(false);
                   deleteLikedPost(post.id);
                 }
               }}

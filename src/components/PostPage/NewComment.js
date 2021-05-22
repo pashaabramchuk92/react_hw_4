@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const NewComment = ({ url, id, postNewComment }) => {
+const NewComment = ({ id, postNewComment }) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [commentText, setCommentText] = useState('');
@@ -18,7 +18,7 @@ const NewComment = ({ url, id, postNewComment }) => {
           body: commentText
         }
 
-        postNewComment(url, id, comment);
+        postNewComment(id, comment);
 
         e.target.reset();
       }}
